@@ -1,7 +1,7 @@
 /**
  * Created by akucherenko on 16.10.13.
  */
-define(['Backbone'], function (backbone){
+define(['backbone'], function (Backbone){
 
     var initialize = function (){
         //*$("#loading-mask").remove();

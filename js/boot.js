@@ -13,18 +13,25 @@ require.config({
     paths: {
 
         // Main libs stack
-        jQuery: 'vendor/jquery/jquery-2.0.3',
-        Underscore: 'vendor/lodash/lodash',
-        Backbone: 'vendor/backbone/backbone',
-        Semantic: 'vendor/semantic/packaged/javascript/semantic',
+        $: 'vendor/jquery/jquery-2.0.3',
+        _: 'vendor/lodash/lodash',
+        backbone: 'vendor/backbone/backbone',
+
+        // UI lib
+        semantic: 'vendor/semantic/packaged/javascript/semantic',
 
         // Application
         App: 'js/WebGLResearch'
     },
 
     shim: {
-        'Backbone': ['Underscore', 'jQuery'],
-        'App': ['Backbone']
+        '$': {
+            exports: '$'
+        },
+        'backbone': {
+            deps: ['_', '$'],
+            exports: 'backbone'
+        }
     }
 });
 
