@@ -1,14 +1,39 @@
-<ul>
-    <li>111111</li>
-    <li>111111</li>
+<div class="center top-margin">
 
-    <li>111111</li>
+    <div class="ui segment">
+        <h2 class="ui header">
+            <i class="settings icon"></i>
+            WebGL Research
+        </h2>
+    </div>
 
-    <li>111111</li>
+    <div class="ui items slide">
 
-    <li>111111</li>
-    <li>111111</li>
-    <li>111111</li>
-    <li>111111</li>
+        <% _.each(scenes, function(scene){ %>
 
-</ul>
+        <div class="item">
+
+            <div class="image">
+                <img src="images/webgl-logo.jpeg">
+            </div>
+
+            <div class="content">
+
+                <div class="name"><%= scene.name %></div>
+                <p class="description"><%= scene.description %></p>
+
+                <div class="extra">
+                    <div rel-data="<%= scene.id %>" class="ui right red labeled icon button loadSceneBtn" style="width: 300px">
+                        <i class="right arrow icon"></i>
+                        Run example
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <% }); %>
+
+    </div>
+</div>

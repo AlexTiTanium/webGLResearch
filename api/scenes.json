@@ -1,14 +1,23 @@
 [
     {
-        "id": 1,
+        "id": "first-scene",
         "name": "First scene",
         "scene": "scenes/first.json",
         "description": "My first WebGL experiment"
     },
+
     {
-        "id": 2,
+        "id": "second-scene",
+        "name": "Second scene",
+        "scene": "scenes/second.json",
+        "description": "My Second WebGL experiment"
+    },
+
+    {
+        "id": "3-scene",
         "name": "Second scene",
         "scene": "scenes/second.json",
         "description": "My Second WebGL experiment"
     }
+
 ]

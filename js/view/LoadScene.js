@@ -8,8 +8,7 @@ define([
     'underscore',
     'jquery',
     'text!template/selectLevel.html',
-    'collection/SceneCollection',
-    'view/'
+    'collection/SceneCollection'
     ],
     function (Backbone, _, $, template, SceneCollection){
 
@@ -17,11 +16,6 @@ define([
 
         // Define template source
         template: _.template(template),
-
-        // Event listeners
-        events: {
-            "click .loadSceneBtn":          "loadScene"
-        },
 
         /**
          * Collection of scene, user must select one of theme
@@ -46,24 +40,11 @@ define([
         },
 
         /**
-         * Load scene event
-         */
-        loadScene: function(event){
-
-            var sceneId = $(event.target).attr('rel-data');
-
-
-        },
-
-        /**
          * Update view
          */
         render: function () {
 
-            // Update html content
-            this.$el.html(this.template({
-                scenes:  this.collection.toJSON()
-            }));
+
         }
 
     });

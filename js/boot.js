@@ -5,13 +5,17 @@
 // Use ECMAScript 5 Strict Mode
 "use strict";
 
-// Define jQuery as AMD module
+// Define jQuery as AMD module, we use JQ shim so not need for us
 define.amd.jQuery = false;
 
 require.config({
 
+    // Set base url
     baseUrl: 'js/',
 
+    /**
+     * Modules path config
+     */
     paths: {
 
         // Main libs stack
@@ -33,19 +37,27 @@ require.config({
      * Shim setup
      */
     shim: {
+
+        semantic: {
+            deps: ['jquery']
+        },
+
         jquery: {
             exports: '$'
         },
+
         backbone: {
             deps: ['underscore', 'jquery'],
             exports: 'Backbone'
         },
+
         underscore: {
             exports: '_'
         }
     }
 });
 
-require(['App'], function(App) {
+// Start app
+require(['App', 'semantic'], function(App) {
     App.initialize();
 });

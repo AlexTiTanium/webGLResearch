@@ -4,7 +4,7 @@
  * Enter point of application;
  * Here we init app, enable backbone history, and define routers
  */
-define(['backbone', 'view/SelectScene'], function (Backbone, SelectScene){
+define(['backbone', 'view/SelectScene', 'jquery'], function (Backbone, SelectScene, $){
 
     /**
      * Init application
@@ -42,8 +42,8 @@ define(['backbone', 'view/SelectScene'], function (Backbone, SelectScene){
          */
 
         // Home default reaction
-        'selectScene': function(){
-            new SelectScene().render();
+        selectScene: function(){
+            new SelectScene({ el: $('#content') });
         }
     });
     // End router setup
