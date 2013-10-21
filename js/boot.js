@@ -6,31 +6,42 @@
 "use strict";
 
 // Define jQuery as AMD module
-define.amd.jQuery = true;
+define.amd.jQuery = false;
 
 require.config({
+
+    baseUrl: 'js/',
 
     paths: {
 
         // Main libs stack
-        $: 'vendor/jquery/jquery-2.0.3',
-        _: 'vendor/lodash/lodash',
-        backbone: 'vendor/backbone/backbone',
+        jquery: '../vendor/jquery/jquery-2.0.3',
+        underscore: '../vendor/lodash/lodash',
+        backbone: '../vendor/backbone/backbone',
+
+        // Require js plugins
+        text: '../vendor/requirejs/text',
 
         // UI lib
-        semantic: 'vendor/semantic/packaged/javascript/semantic',
+        semantic: '../vendor/semantic/packaged/javascript/semantic',
 
         // Application
-        App: 'js/WebGLResearch'
+        App: 'WebGLResearch'
     },
 
+    /**
+     * Shim setup
+     */
     shim: {
-        '$': {
+        jquery: {
             exports: '$'
         },
-        'backbone': {
-            deps: ['_', '$'],
-            exports: 'backbone'
+        backbone: {
+            deps: ['underscore', 'jquery'],
+            exports: 'Backbone'
+        },
+        underscore: {
+            exports: '_'
         }
     }
 });
