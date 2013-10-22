@@ -8,8 +8,7 @@ define([
     'underscore',
     'jquery',
     'text!template/selectLevel.html',
-    'collection/SceneCollection',
-    'view/'
+    'collection/SceneCollection'
     ],
     function (Backbone, _, $, template, SceneCollection){
 
@@ -20,7 +19,7 @@ define([
 
         // Event listeners
         events: {
-            "click .loadSceneBtn":          "loadScene"
+            "click .loadSceneBtn":  "loadScene"
         },
 
         /**
@@ -50,9 +49,11 @@ define([
          */
         loadScene: function(event){
 
+            // sceneId == id in scene model
             var sceneId = $(event.target).attr('rel-data');
 
-
+            // Navigate to scene loader, trigger - trigger router
+            Backbone.application.router.navigate('scene/'+sceneId,  {trigger: true});
         },
 
         /**

@@ -19,9 +19,11 @@ require.config({
     paths: {
 
         // Main libs stack
-        jquery: '../vendor/jquery/jquery-2.0.3',
+        jquery:     '../vendor/jquery/jquery-2.0.3',
         underscore: '../vendor/lodash/lodash',
-        backbone: '../vendor/backbone/backbone',
+        backbone:   '../vendor/backbone/backbone',
+        toolbox:    '../vendor/jstoolsbox/toolbox',
+        three:      '../vendor/threejs/build/three',
 
         // Require js plugins
         text: '../vendor/requirejs/text',
@@ -30,13 +32,20 @@ require.config({
         semantic: '../vendor/semantic/packaged/javascript/semantic',
 
         // Application
-        App: 'WebGLResearch'
+        app:            'WebGLResearch',
+        router:         'router/MainRouter',
+        baseBehaviour:  'lib/BaseBehaviour'
     },
 
     /**
      * Shim setup
      */
     shim: {
+
+        toolbox: {
+            exports: 'Toolbox',
+            deps: ['underscore']
+        },
 
         semantic: {
             deps: ['jquery']
@@ -58,6 +67,7 @@ require.config({
 });
 
 // Start app
-require(['App', 'semantic'], function(App) {
+require(['backbone','app', 'semantic'], function(Backbone, App) {
+
     App.initialize();
 });

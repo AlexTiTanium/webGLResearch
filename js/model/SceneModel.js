@@ -3,6 +3,10 @@
  */
 define(['backbone'], function (Backbone){
 
+    /**
+     * SceneModel class
+     * @class SceneModel
+     */
     return Backbone.Model.extend({
 
         defaults: {

@@ -4,50 +4,29 @@
  * Enter point of application;
  * Here we init app, enable backbone history, and define routers
  */
-define(['backbone', 'view/SelectScene', 'jquery'], function (Backbone, SelectScene, $){
+define(['backbone', 'router'], function (Backbone, Router){
 
     /**
      * Init application
      */
     var initialize = function (){
 
+        // Hide loading screen
+        $("#loading-mask").remove();
+
         // Init main router
-        new MainRouter();
+        var router = new Router();
+
+        // Create application property in backbone.
+        // Sorry for that, but I don`t know how do it right, idea with global window.app object don`t like me
+        // This need for access to current router globally
+        Backbone.application = {};
+        Backbone.application.router = router;
+
+        // Enable history
+        Backbone.history.start();
     };
 
-    /**
-     * Router setup
-     */
-    var MainRouter = Backbone.Router.extend({
-
-        // Router init
-        initialize: function(){
-
-            // Hide loading screen
-            $("#loading-mask").remove();
-
-            // Enable history
-            Backbone.history.start();
-        },
-
-        /**
-         * Routers paths
-         */
-        routes: {
-            '': 'selectScene'
-        },
-
-        /**
-         * Reactions callbacks
-         */
-
-        // Home default reaction
-        selectScene: function(){
-            new SelectScene({ el: $('#content') });
-        }
-    });
-    // End router setup
-
     // Return public interface
-    return { initialize: initialize, router: MainRouter }
+    return { initialize: initialize }
 });
