@@ -27,6 +27,12 @@ define([
         scene: null,
 
         /**
+         * Engine
+         * @property {ScriptEngine} engine
+         */
+        engine: null,
+
+        /**
          * Init view fetch collection from server
          */
         initialize: function (attrs) {
@@ -34,7 +40,10 @@ define([
             // Get params from router
             this.scene = attrs.scene;
 
-            // Create scene and start render process
+            // Init engine
+            this.engine = new Engine(this.$el, this.scene);
+
+            // Start render process
             this.render();
         },
 
@@ -43,11 +52,8 @@ define([
          */
         render: function () {
 
-            // Init engine
-            var engine = new Engine(this.$el, this.scene);
-
             // Render
-            engine.start();
+            this.engine.start();
         }
 
     });

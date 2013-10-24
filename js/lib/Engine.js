@@ -5,8 +5,9 @@ define([
     'baseBehaviour',
     'lib/Viewport',
     'lib/Camera',
-    'lib/Renderer'
-], function (BaseBehaviour, Viewport, Camera, Renderer) {
+    'lib/Renderer',
+    'lib/ScriptEngine'
+], function (BaseBehaviour, Viewport, Camera, Renderer, ScriptEngine) {
 
     /**
      * Engine class
@@ -26,7 +27,7 @@ define([
         scene: null,
 
         /**
-         * @property {$} camera
+         * @property {$} container
          */
         container: null,
 
@@ -39,6 +40,13 @@ define([
          * @property {Renderer} renderer
          */
         renderer: null,
+
+        /**
+         * Script Engine
+         *
+         * @property {ScriptEngine} scriptEngine
+         */
+        scriptEngine: null,
 
         /**
          * Engine constructor
@@ -60,6 +68,20 @@ define([
 
             // Create render element
             this.renderer = new Renderer(container, this.scene, this.camera);
+
+            // Script engine
+            this.scriptEngine = new ScriptEngine(this);
+
+            // Attache scripts
+            this.attachScripts();
+        },
+
+        /**
+         * Init base script sets
+         */
+        attachScripts: function(){
+
+            this.scriptEngine.addScript(this.camera.cameraThree, 'lib/scripts/camera/CameraFreeController');
         },
 
         /**
