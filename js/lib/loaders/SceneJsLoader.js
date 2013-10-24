@@ -45,7 +45,6 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
          * Load scene
          *
          * @param {string} url
-         * @return {THREE.Scene}
          */
         load: function(url){
 

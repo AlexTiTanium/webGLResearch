@@ -1,7 +1,4 @@
 /**
- * Created by akucherenko on 24.10.13.
- */
-/**
  * Created by akucherenko on 22.10.13.
  */
 define([
@@ -10,25 +7,30 @@ define([
 ], function (BaseBehaviour, ScriptObject) {
 
     /**
-     * Engine class
+     * ScriptEngine class
      *
-     *  @class Engine
+     *  @class ScriptEngine
      */
     return BaseBehaviour.extend({
 
         /**
          * Engine instance
+         *
+         * @property {Engine} collectionScriptObjects
          */
         engine: null,
 
         /**
          * Collection of ScriptObjects
+         *
+         * @property [ScriptObject] collectionScriptObjects
          */
         collectionScriptObjects: [],
 
         /**
          * Engine constructor
          *
+         * @param {Engine} engine
          * @constructor
          */
         constructor: function (engine) {
@@ -38,6 +40,9 @@ define([
 
         /**
          * Add script
+         *
+         * @param {object} object
+         * @param {string} scriptPath
          */
         addScript: function(object, scriptPath){
 
@@ -49,7 +54,7 @@ define([
                 if(index > 0){
                     scriptObject = self.collectionScriptObjects[index];
                 }else{
-                    scriptObject = new ScriptObject(object, this.engine);
+                    scriptObject = new ScriptObject(object, self.engine, self);
                     self.collectionScriptObjects.pop(scriptObject);
                 }
 

@@ -26,11 +26,6 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
         rendererThree: null,
 
         /**
-         * Time from last step
-         */
-        lastTime: null,
-
-        /**
          * SceneJsLoader constructor
          *
          * @param {$} container
@@ -52,44 +47,6 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
 
             // attach the render-supplied DOM element
             container.html(this.rendererThree.domElement);
-        },
-
-        /**
-         * Start render loop
-         */
-        beginRenderLoop: function(){
-
-            this.renderStep();
-        },
-
-        /**
-         * Main render loop
-         */
-        renderStep: function(deltaTime){
-
-            this.requestAnimationFrame(this.renderStep);
-            this.rendererThree.render(this.scene.sceneThree,  this.camera.cameraThree);
-            console.log("Render");
-        },
-
-        /**
-         * Main render loop generator
-         */
-        requestAnimationFrame: function (callback) {
-
-            var currTime = Date.now(), timeToCall = Math.max( 0, 16 - ( currTime - this.lastTime ) );
-            var id = setTimeout( function() { callback( currTime + timeToCall ); }, timeToCall );
-            this.lastTime = currTime + timeToCall;
-
-            return id;
-        },
-
-        /**
-         * Cancel loop step
-         * @param id
-         */
-        cancelAnimationFrame: function (id) {
-            clearTimeout(id)
         }
 
     });

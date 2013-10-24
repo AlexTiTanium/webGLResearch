@@ -25,6 +25,10 @@ require.config({
         toolbox:    '../vendor/jstoolsbox/toolbox',
         three:      '../vendor/threejs/build/three',
 
+        // Controls
+        mouse:      '../vendor/mouse/mouse',
+        keyboard:   '../vendor/mousetrap/mousetrap.min',
+
         // Require js plugins
         text: '../vendor/requirejs/text',
 
@@ -49,6 +53,14 @@ require.config({
         toolbox: {
             exports: 'Toolbox',
             deps: ['underscore']
+        },
+
+        mouse: {
+            exports: 'mouse'
+        },
+
+        keyboard: {
+            exports: 'Mousetrap'
         },
 
         semantic: {
