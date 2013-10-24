@@ -42,6 +42,10 @@ require.config({
      */
     shim: {
 
+        three: {
+            exports: 'THREE'
+        },
+
         toolbox: {
             exports: 'Toolbox',
             deps: ['underscore']

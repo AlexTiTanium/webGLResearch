@@ -2,21 +2,21 @@
     {
         "id": "first-scene",
         "name": "First scene",
-        "scene": "scenes/first.json",
+        "scenePath": "scenes/firstScene/scene.json",
         "description": "My first WebGL experiment"
     },
 
     {
         "id": "second-scene",
         "name": "Second scene",
-        "scene": "scenes/second.json",
+        "scenePath": "scenes/firstScene/scene.json",
         "description": "My Second WebGL experiment"
     },
 
     {
         "id": "3-scene",
         "name": "Second scene",
-        "scene": "scenes/second.json",
+        "scenePath": "scenes/firstScene/scene.json",
         "description": "My Second WebGL experiment"
     }
 

@@ -1,10 +1,10 @@
 /**
  * Created by akucherenko on 22.10.13.
  */
-define(['baseBehaviour'], function (BaseBehaviour){
+define(['baseBehaviour', 'lib/loaders/SceneJsLoader'], function (BaseBehaviour, SceneLoader){
 
     /**
-     * Scene object
+     * Scene class
      *
      *  @class Scene
      */
@@ -13,7 +13,17 @@ define(['baseBehaviour'], function (BaseBehaviour){
         /**
          * @property {SceneModel} sceneModel
          */
-        scene: null,
+        sceneModel: null,
+
+        /**
+         * @property {SceneLoader} sceneLoader
+         */
+        sceneLoader: null,
+
+        /**
+         * @property {THREE.Scene} scene
+         */
+        sceneThree: null,
 
         /**
          *  Create scene instance, from scene model
@@ -22,7 +32,21 @@ define(['baseBehaviour'], function (BaseBehaviour){
          */
         constructor : function(sceneModel) {
 
-            this.scene = sceneModel;
+            var self = this;
+
+            // Init
+            self.sceneModel = sceneModel;
+            self.sceneLoader = new SceneLoader();
+
+            // Listen events
+            self.sceneLoader.on('progress', function(loaded){
+                self.trigger('progress', loaded);
+            });
+
+            self.sceneLoader.on('loaded', function(scene){
+                self.sceneThree = (scene);
+                self.trigger('scene:ready');
+            });
         },
 
         /**
@@ -30,7 +54,19 @@ define(['baseBehaviour'], function (BaseBehaviour){
          */
         load: function(){
 
+            var path = this.sceneModel.get("scenePath");
 
+            this.sceneLoader.load(path);
+        },
+
+        /**
+         * Add object to scene
+         *
+         * @param object
+         */
+        add: function(object){
+
+            this.sceneThree.add(object);
         }
 
     });

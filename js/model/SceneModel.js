@@ -1,7 +1,7 @@
 /**
  * Created by akucherenko on 21.10.13.
  */
-define(['backbone'], function (Backbone){
+define(['backbone', 'jquery'], function (Backbone, $) {
 
     /**
      * SceneModel class
@@ -9,10 +9,14 @@ define(['backbone'], function (Backbone){
      */
     return Backbone.Model.extend({
 
+        /**
+         * Default fields set
+         */
         defaults: {
-            "name":         "Demo scene name",
-            "scene":        "Path to scene file",
-            "description":   "Description"
+            "id": "Unique scene name",
+            "name": "Demo scene name",
+            "scenePath": "Path to scene file",
+            "description": "Description"
         }
     });
 

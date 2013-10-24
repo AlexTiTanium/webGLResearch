@@ -9,17 +9,21 @@ define([
     'jquery',
     'text!template/selectLevel.html',
     'collection/SceneCollection'
-    ],
-    function (Backbone, _, $, template, SceneCollection){
+], function (Backbone, _, $, template, SceneCollection) {
 
+    /**
+     * SelectScene view class
+     *
+     *  @class SelectScene
+     */
     return Backbone.View.extend({
 
-        // Define template source
+        // Define template source selectLevel.html
         template: _.template(template),
 
         // Event listeners
         events: {
-            "click .loadSceneBtn":  "loadScene"
+            "click .loadSceneBtn": "loadScene"
         },
 
         /**
@@ -38,22 +42,22 @@ define([
             this.collection = new SceneCollection();
 
             // Listen reset event
-            this.listenTo(this.collection, 'reset',  this.render);
+            this.listenTo(this.collection, 'reset', this.render);
 
             // Get data from data source
-            this.collection.fetch({reset:true}); // Some changes after 1.0, now reset not fire on fetch, need set {reset:true}
+            this.collection.fetch({reset: true}); // Some changes after 1.0, now reset not fire on fetch, need set {reset:true}
         },
 
         /**
          * Load scene event
          */
-        loadScene: function(event){
+        loadScene: function (event) {
 
             // sceneId == id in scene model
             var sceneId = $(event.target).attr('rel-data');
 
             // Navigate to scene loader, trigger - trigger router
-            Backbone.application.router.navigate('scene/'+sceneId,  {trigger: true});
+            Backbone.application.router.navigate('scene/' + sceneId, {trigger: true});
         },
 
         /**
@@ -63,7 +67,7 @@ define([
 
             // Update html content
             this.$el.html(this.template({
-                scenes:  this.collection.toJSON()
+                scenes: this.collection.toJSON()
             }));
         }
 
