@@ -69,6 +69,8 @@ var Loader = function ( editor ) {
 					var xml = parser.parseFromString( contents, 'text/xml' );
 
 					var loader = new THREE.ColladaLoader();
+                    loader.options.convertUpAxis = true;
+
 					loader.parse( xml, function ( collada ) {
 
 						collada.scene.name = filename;

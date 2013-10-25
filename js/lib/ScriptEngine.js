@@ -46,16 +46,16 @@ define([
          */
         addScript: function(object, scriptPath){
 
-            var self = this, scriptObject = null;
-            var index = self.collectionScriptObjects.indexOf(object);
+            var scope = this, scriptObject = null;
+            var index = scope.collectionScriptObjects.indexOf(object);
 
             require([scriptPath], function(Script) {
 
                 if(index > 0){
-                    scriptObject = self.collectionScriptObjects[index];
+                    scriptObject = scope.collectionScriptObjects[index];
                 }else{
-                    scriptObject = new ScriptObject(object, self.engine, self);
-                    self.collectionScriptObjects.pop(scriptObject);
+                    scriptObject = new ScriptObject(object, scope.engine, scope);
+                    scope.collectionScriptObjects.pop(scriptObject);
                 }
 
                 scriptObject.attachScript(Script);

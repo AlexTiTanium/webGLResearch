@@ -34,6 +34,8 @@ define([
          */
         scriptObject: null,
 
+        scene: null,
+
         /**
          * BaseScript constructor
          *
@@ -48,6 +50,8 @@ define([
             this.object = object;
             this.engine = engine;
             this.scriptObject = scriptObject;
+
+            this.scene = engine.scene;
 
             // Init script
             this.awake();

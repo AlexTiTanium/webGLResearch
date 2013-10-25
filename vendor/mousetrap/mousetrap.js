@@ -19,6 +19,8 @@
  *
  * @version 1.4.5
  * @url craig.is/killing/mice
+ * https://github.com/ccampbell/mousetrap
+ *
  */
 (function(window, document, undefined) {
 

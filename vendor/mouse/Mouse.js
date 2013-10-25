@@ -1,6 +1,7 @@
 /*
  * Mouse: Makes the mouse into a first class citizen.
  *
+ * https://github.com/Benvie/Mouse
  * Copyright (c) 2012 Brandon Benvie <http://bbenvie.com>
  * Released under MIT license.
  *

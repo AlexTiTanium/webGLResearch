@@ -48,11 +48,11 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
          */
         load: function(url){
 
-            var self = this;
+            var scope = this;
 
             this.loader.load(url, function(data){
 
-                self.trigger(self.events.loaded, data);
+                scope.trigger(scope.events.loaded, data);
             });
         },
 

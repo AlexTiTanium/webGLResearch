@@ -32,20 +32,20 @@ define(['baseBehaviour', 'lib/loaders/SceneJsLoader'], function (BaseBehaviour, 
          */
         constructor : function(sceneModel) {
 
-            var self = this;
+            var scope = this;
 
             // Init
-            self.sceneModel = sceneModel;
-            self.sceneLoader = new SceneLoader();
+            scope.sceneModel = sceneModel;
+            scope.sceneLoader = new SceneLoader();
 
             // Listen events
-            self.sceneLoader.on('progress', function(loaded){
-                self.trigger('progress', loaded);
+            scope.sceneLoader.on('progress', function(loaded){
+                scope.trigger('progress', loaded);
             });
 
-            self.sceneLoader.on('loaded', function(scene){
-                self.sceneThree = (scene);
-                self.trigger('scene:ready');
+            scope.sceneLoader.on('loaded', function(scene){
+                scope.sceneThree = (scene);
+                scope.trigger('scene:ready');
             });
         },
 
@@ -67,6 +67,16 @@ define(['baseBehaviour', 'lib/loaders/SceneJsLoader'], function (BaseBehaviour, 
         add: function(object){
 
             this.sceneThree.add(object);
+        },
+
+        /**
+         * Remove from scene
+         *
+         * @param object
+         */
+        remove: function(object){
+
+            this.sceneThree.remove(object);
         }
 
     });
