@@ -83,7 +83,7 @@ require.config({
 });
 
 // Start app
-require(['backbone','app', 'semantic'], function(Backbone, App) {
+require(['backbone','app', 'semantic', 'three'], function(Backbone, App) {
 
     App.initialize();
 });

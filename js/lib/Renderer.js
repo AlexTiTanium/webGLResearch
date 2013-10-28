@@ -1,24 +1,21 @@
 /**
  * Created by akucherenko on 22.10.13.
  */
+
+/**
+ * Renderer class
+ *
+ *  @class Renderer
+ */
 define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
 
-    /**
-     * Renderer class
-     *
-     *  @class Renderer
-     */
+
     return BaseBehaviour.extend({
 
         /**
          * @property {Scene} scene
          */
         scene: null,
-
-        /**
-         * @property {Camera} loader
-         */
-        camera: null,
 
         /**
          * @property {THREE.WebGLRenderer} rendererThree
@@ -30,20 +27,25 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
          *
          * @param {$} container
          * @param {Scene} scene
-         * @param {camera} camera
          *
          * @constructor
          */
-        constructor: function (container, scene, camera) {
+        constructor: function (container, scene) {
 
             this.scene = scene;
-            this.camera = camera;
 
             // Create WebGLRenderer
-            this.rendererThree = new THREE.WebGLRenderer();
+            //this.rendererThree = new THREE.WebGLRenderer({ antialias: true });
+            this.rendererThree = new THREE.WebGLRenderer({ antialias: true });
+            //this.rendererThree = new THREE.CanvasRenderer();
 
             // start the renderer
-            this.rendererThree.setSize(this.camera.viewport.width, this.camera.viewport.height);
+            this.rendererThree.setSize(this.scene.viewport.width, this.scene.viewport.height);
+
+            // Options
+            this.rendererThree.gammaInput = true;
+            this.rendererThree.gammaOutput = true;
+            this.rendererThree.physicallyBasedShading = true;
 
             // attach the render-supplied DOM element
             container.html(this.rendererThree.domElement);

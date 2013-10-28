@@ -15,34 +15,55 @@ define([
 
         /**
          * Engine instance
+         *
+         * @property {Engine} engine
          */
         engine: null,
 
-        id: null,
-
-        group: null,
-
+        /**
+         * Target object
+         *
+         * @property {object} object
+         */
         object: null,
 
+        /**
+         * Object name
+         *
+         * @property {string} name
+         */
+        name: null,
+
+        /**
+         * Script collection for this object
+         *
+         * @property [BaseScript] scripts
+         */
         scripts: [],
 
         /**
          * Engine constructor
          *
+         * @param {object} object
+         * @param {Engine} engine
+         *
          * @constructor
          */
         constructor: function (object, engine) {
 
-            this.engine = engine;
             this.object = object;
+            this.engine = engine;
         },
 
         /**
          * Attach script
+         *
+         * @param {BaseScript} ScriptClass
+         * @param {object} scriptConfig
          */
-        attachScript: function(ScriptClass){
+        attachScript: function(ScriptClass, scriptConfig){
 
-            this.scripts.pop(new ScriptClass(this.object, this.engine, this));
+            this.scripts.pop(new ScriptClass(this.object, scriptConfig, this));
         }
 
     });

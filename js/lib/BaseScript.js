@@ -14,13 +14,6 @@ define([
     return BaseBehaviour.extend({
 
         /**
-         * Engine instance
-         *
-         * @property {Engine} engine
-         */
-        engine: null,
-
-        /**
          * Object for work
          *
          * @property {object} object
@@ -34,24 +27,45 @@ define([
          */
         scriptObject: null,
 
+        /**
+         * Engine shortcut
+         *
+         * @property {Engine} engine
+         */
+        engine: null,
+
+        /**
+         * Scene shortcut
+         *
+         * @property {THREE.Scene} scene
+         */
         scene: null,
+
+        /**
+         * Here we save script configuration
+         *
+         * @property {object} config
+         */
+        config: null,
 
         /**
          * BaseScript constructor
          *
          * @param {object} object
-         * @param {Engine} engine
+         * @param {object} scriptConfig
          * @param {ScriptObject} scriptObject
          *
          * @constructor
          */
-        constructor: function (object, engine, scriptObject) {
+        constructor: function (object, scriptConfig, scriptObject) {
 
             this.object = object;
-            this.engine = engine;
-            this.scriptObject = scriptObject;
+            this.scene = scriptObject.engine.scene;
 
-            this.scene = engine.scene;
+            this.scriptObject = scriptObject;
+            this.config = scriptConfig;
+
+            this.engine = scriptObject.engine;
 
             // Init script
             this.awake();

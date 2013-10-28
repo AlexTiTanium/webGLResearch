@@ -3,11 +3,11 @@
  */
 define([
     'baseBehaviour',
-    'lib/Viewport',
-    'lib/Camera',
+    'underscore',
     'lib/Renderer',
+    'lib/Scene',
     'lib/ScriptEngine'
-], function (BaseBehaviour, Viewport, Camera, Renderer, ScriptEngine) {
+], function (BaseBehaviour, _, Renderer, Scene, ScriptEngine) {
 
     /**
      * Engine class
@@ -15,11 +15,6 @@ define([
      *  @class Engine
      */
     return BaseBehaviour.extend({
-
-        /**
-         * @property {Camera} camera
-         */
-        camera: null,
 
         /**
          * @property {Scene} scene
@@ -32,14 +27,16 @@ define([
         container: null,
 
         /**
-         * @property {Viewport} viewport
-         */
-        viewport: null,
-
-        /**
          * @property {Renderer} renderer
          */
         renderer: null,
+
+        /**
+         * Time from last step
+         *
+         * @property {Number} scriptEngine
+         */
+        lastTime: null,
 
         /**
          * Script Engine
@@ -49,54 +46,48 @@ define([
         scriptEngine: null,
 
         /**
-         * Time from last step
-         */
-        lastTime: null,
-
-        /**
          * Engine constructor
          *
-         * @param {$} container
-         * @param {scene} scene
          *
          * @constructor
          */
-        constructor: function (container, scene) {
+        constructor: function () {
 
-            this.scene = scene;
-
-            // Create view and set sizes
-            this.viewport = new Viewport();
-
-            // Create camera and calculate perspective view
-            this.camera = new Camera(this.viewport);
-
-            // Add Camera to scene
-            this.scene.add(this.camera.cameraThree);
-
-            // Create render element
-            this.renderer = new Renderer(container, this.scene, this.camera);
-
-            // Script engine
             this.scriptEngine = new ScriptEngine(this);
-
-            // Attache scripts
-            this.attachScripts();
         },
 
         /**
-         * Init base script sets
+         * Load scene from model
+         *
+         * @param sceneModel
          */
-        attachScripts: function(){
+        load: function(sceneModel){
 
-            // add camera controller script
-            this.scriptEngine.addScript(this.camera.cameraThree, 'lib/scripts/camera/CameraPointerlockController');
+            var scope = this;
+
+            scope.scene = new Scene(this.scriptEngine);
+
+            // Listen events
+            scope.scene.on('loading:progress', function(loaded){
+                scope.trigger('loading:progress', loaded);
+            });
+
+            scope.scene.on('scene:ready', function(){
+                scope.trigger('scene:ready');
+            });
+
+            scope.scene.load(sceneModel);
         },
 
         /**
          * Start main render loop
          */
-        start: function(){
+        beginRenderToContainer: function(container){
+
+            console.log('Start render');
+            this.scene.defaultCamera.updateProjectionMatrix();
+
+            this.renderer = new Renderer(container, this.scene);
 
             // Schedule firs render step
             self.requestAnimationFrame(this.renderStep.bind(this));
@@ -104,11 +95,13 @@ define([
 
         /**
          * Main render loop step, ~60 calls per second
+         *
+         * @param {number} time
          */
         renderStep: function(time){
 
             // Render current scene
-            this.renderer.rendererThree.render(this.scene.sceneThree,  this.camera.cameraThree);
+            this.renderer.rendererThree.render(this.scene.sceneThree,  this.scene.defaultCamera);
 
             // Notify about each tick, send delta time
             this.trigger("update", time - this.lastTime);

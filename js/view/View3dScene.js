@@ -7,12 +7,11 @@ define([
     'backbone',
     'underscore',
     'jquery',
-    'text!template/view3dScene.html',
-    'lib/Engine'
-], function (Backbone, _, $, template, Engine) {
+    'text!template/view3dScene.html'
+], function (Backbone, _, $, template) {
 
     /**
-     * SceneJsLoader view class
+     * View3dScene view class
      *
      *  @class View3dScene
      */
@@ -22,29 +21,21 @@ define([
         template: _.template(template),
 
         /**
-         * @property {THREE.Scene} scene
+         * @property {Engine} engine
          */
         scene: null,
-
-        /**
-         * Engine
-         * @property {ScriptEngine} engine
-         */
-        engine: null,
 
         /**
          * Init view fetch collection from server
          */
         initialize: function (attrs) {
 
+            var scope = this;
+
             // Get params from router
-            this.scene = attrs.scene;
+            scope.scene = attrs.scene;
 
-            // Init engine
-            this.engine = new Engine(this.$el, this.scene);
-
-            // Start render process
-            this.render();
+            scope.render();
         },
 
         /**
@@ -52,8 +43,7 @@ define([
          */
         render: function () {
 
-            // Render
-            this.engine.start();
+            this.scene.beginRenderToContainer(this.$el);
         }
 
     });

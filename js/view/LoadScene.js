@@ -9,9 +9,9 @@ define([
     'jquery',
     'text!template/loadScene.html',
     'collection/SceneCollection',
-    'lib/Scene',
+    'lib/Engine',
     'view/View3dScene'
-], function (Backbone, _, $, template, SceneCollection, Scene, View3dScene) {
+], function (Backbone, _, $, template, SceneCollection, Engine, View3dScene) {
 
     /**
      * LoadScene view class
@@ -50,7 +50,7 @@ define([
         model: null,
 
         /**
-         * @property {THREE.Scene} scene
+         * @property {Engine} engine
          */
         scene: null,
 
@@ -81,14 +81,14 @@ define([
             this.model = this.collection.get(this.sceneId);
 
             // Crete scene from scene model
-            this.scene = new Scene(this.model);
+            this.scene = new Engine();
 
             // Listen scene event
-            this.scene.on("progress",       this.updateProgress);
-            this.scene.on("scene:ready",    this.sceneReady);
+            this.scene.on("loading:progress", this.updateProgress);
+            this.scene.on("scene:ready",      this.sceneReady);
 
             // Init loading
-            this.scene.load();
+            this.scene.load(this.model);
 
             // Update view
             this.render();

@@ -11,20 +11,7 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
     return BaseBehaviour.extend({
 
         /**
-         * Events Set
-         */
-        events : {
-            progress:   'progress',
-            loaded:     'loaded'
-        },
-
-        /**
-         * @property {LoadingManager} loaderManager
-         */
-        loaderManager: null,
-
-        /**
-         * @property {ObjectLoader} loader
+         * @property {SceneLoader} loader
          */
         loader: null,
 
@@ -35,10 +22,8 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
          */
         constructor: function () {
 
-            this.loaderManager = new THREE.LoadingManager();
-            this.initLoaderManagerEvents();
-
-            this.loader = new THREE.ObjectLoader(this.loaderManager);
+            this.loader = new THREE.SceneLoader();
+            this.loader.callbackProgress = this.updateLoadingProgress.bind(this);
         },
 
         /**
@@ -52,41 +37,24 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
 
             this.loader.load(url, function(data){
 
-                scope.trigger(scope.events.loaded, data);
+                scope.trigger("loaded", data);
             });
         },
 
         /**
-         * Parse scene
-         *
-         * @param {string} scene
-         * @return {THREE.Scene}
+         * Send event progress
          */
-        parse: function(scene){
+        updateLoadingProgress: function (progress, result) {
 
-            if (scene instanceof THREE.Scene) {
-                console.log(result);
+            var percent = 100;
+            var total = progress.totalModels + progress.totalTextures;
+            var loaded = progress.loadedModels + progress.loadedTextures;
+
+            if (total){
+                percent = Math.floor( percent * loaded / total );
             }
 
-            throw new Error("SceneJsLoader parse not scene object");
-        },
-
-        /**
-         * Init event for manager
-         */
-        initLoaderManagerEvents: function () {
-
-            var self = this;
-
-            self.loaderManager.onProgress = function (item, loaded, total) {
-
-                self.trigger(self.events.progress, (loaded * 100) / total); // Calculate percent
-            };
-
-            self.loaderManager.onError = function(){
-
-                throw new Error("SceneJsLoader loading error");
-            };
+            this.trigger("progress", percent);
         }
 
     });
