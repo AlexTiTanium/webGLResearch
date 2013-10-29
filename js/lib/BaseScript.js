@@ -69,14 +69,23 @@ define([
 
             // Init script
             this.awake();
+
+            this.engine.on("render:start", this.start.bind(this));
         },
 
         /**
+         * Call on script attach
          * Override this function in script
          */
         awake: function(){
 
-        }
+        },
 
+        /**
+         * Call after render
+         */
+        start: function(){
+
+        }
     });
 });

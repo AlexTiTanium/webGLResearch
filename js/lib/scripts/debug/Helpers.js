@@ -4,8 +4,9 @@
 define([
     'lib/BaseScript',
     'three',
-    'underscore'
-], function (BaseScript, THREE, _) {
+    'underscore',
+    'keyboard'
+], function (BaseScript, THREE, _, Keyboard) {
 
     /**
      * Helpers class
@@ -15,56 +16,171 @@ define([
     return BaseScript.extend({
 
         /**
+         * Here we save current displayed helpers, for future remove
+         */
+        helpersCollection: [],
+
+        /**
+         * Current status
+         */
+        isEnabled: false,
+
+        /**
+         * Here we save current displayed helpers, for future remove
+         */
+        normalsHelperCollection: [],
+
+        /**
+         * Status normal helper
+         */
+        isDrawNormalsEnable: false,
+
+        /**
          * Call when script attached to object
          */
         awake: function () {
 
+            this.config.names = this.config.names || [];
+
             var scope = this;
 
-            this.config.drawWire = this.config.drawWire || true;
-            this.config.drawVertexNormals = this.config.drawVertexNormals || true;
-            this.config.drawFacesNormals = this.config.drawFacesNormals || true;
-            this.config.boxHelper = this.config.boxHelper || true;
-            this.config.names = this.config.names || [];
+            Keyboard.bind('z z', function(){
+
+                if(scope.isEnabled){
+                    scope.disable();
+                }else{
+                    scope.enable();
+                }
+
+            });
+
+            Keyboard.bind('n n', function(){
+
+                if(scope.isDrawNormalsEnable){
+                    scope.disableNormals();
+                }else{
+                    scope.enableNormals();
+                }
+
+            });
+        },
+
+        /**
+         * Enable
+         */
+        enable: function(){
+
+            var scope = this;
+
+            this.addAxisHelper();
 
             scope.scene.traverse(function(object){
 
-                if( object.material ) {
-                    object.material.side = THREE.DoubleSide;
+                if(object instanceof THREE.Camera){
+
+                    scope.addCameraHelper(object);
+                    return
+                }
+
+                if(object instanceof THREE.DirectionalLight){
+
+                    scope.addDirectionalLightHelper(object);
+                    return;
+                }
+
+                if(object instanceof THREE.PointLight){
+
+                    scope.addPointLightHelper(object);
+                    return;
                 }
 
                 if (object instanceof THREE.Mesh) {
-
-                    object.geometry.computeFaceNormals();
-                    object.geometry.computeVertexNormals();
 
                     if(!_.isEmpty(scope.config.names) && !_.contains(scope.config.names, object.name)){
                         return;
                     }
 
                     scope.drawWireFrame(object);
-                    scope.drawVertexNormals(object);
-                    scope.drawFacesNormals(object);
                     scope.addBoxHelper(object);
-
                 }
             });
 
+            scope.isEnabled = true;
+        },
+
+
+        /**
+         * Disable all helpers
+         */
+        disable: function(){
+
+            var scope = this;
+
+            _.each(scope.helpersCollection, function(helper){
+
+                scope.scene.remove(helper);
+            });
+
+            scope.helpersCollection = [];
+
+            scope.isEnabled = false;
         },
 
         /**
+         * Enable normals draw
+         */
+        enableNormals: function(){
+
+            var scope = this;
+
+            scope.scene.traverse(function(object){
+
+                if (object instanceof THREE.Mesh) {
+
+                    if(!_.isEmpty(scope.config.names) && !_.contains(scope.config.names, object.name)){
+                        return;
+                    }
+
+                    scope.drawVertexNormals(object);
+                    scope.drawFacesNormals(object);
+                }
+            });
+
+            scope.isDrawNormalsEnable = true;
+        },
+
+        /**
+         * DisableNormals normals draw
+         *
+         */
+        disableNormals: function(){
+
+            var scope = this;
+
+            _.each(scope.normalsHelperCollection, function(helper){
+
+                scope.scene.remove(helper);
+            });
+
+            scope.helpersCollection = [];
+
+            scope.isDrawNormalsEnable = false;
+        },
+
+        /**
+         * Enable normals draw
          *
          * @param mesh
          */
         drawWireFrame: function(mesh){
-
-            if(!this.config.drawWire){ return; }
 
             var helper = new THREE.WireframeHelper(mesh);
 
             helper.material.depthTest = false;
             helper.material.opacity = 0.25;
             helper.material.transparent = true;
+
+            this.helpersCollection.push(helper);
 
             this.scene.add(helper);
         },
@@ -75,9 +191,10 @@ define([
          */
         drawVertexNormals: function(mesh){
 
-            if(!this.config.drawVertexNormals){ return; }
+            var helper = new THREE.VertexNormalsHelper(mesh, 1, false, 0.1);
 
-            this.scene.add(new THREE.VertexNormalsHelper(mesh, 10));
+            this.normalsHelperCollection.push(helper);
+            this.scene.add(helper);
         },
 
         /**
@@ -86,9 +203,10 @@ define([
          */
         drawFacesNormals: function(mesh){
 
-            if(!this.config.drawFacesNormals){ return; }
+            var helper = new THREE.FaceNormalsHelper(mesh, 1, false, 0.1);
 
-            this.scene.add( new THREE.FaceNormalsHelper(mesh,10));
+            this.normalsHelperCollection.push(helper);
+            this.scene.add(helper);
         },
 
         /**
@@ -97,10 +215,58 @@ define([
          */
         addBoxHelper: function(mesh){
 
-            if(!this.config.boxHelper){ return; }
+            var helper = new THREE.BoxHelper(mesh);
 
-            this.scene.add(new THREE.BoxHelper(mesh));
+            this.helpersCollection.push(helper);
+            this.scene.add(helper);
+        },
+
+        /**
+         *
+         *
+         */
+        addAxisHelper: function(){
+
+            var helper = new THREE.AxisHelper(100);
+
+            this.helpersCollection.push(helper);
+            this.scene.add(helper);
+        },
+
+        /**
+         *
+         * @param camera
+         */
+        addCameraHelper: function(camera){
+
+            var helper = new THREE.CameraHelper(camera);
+
+            this.helpersCollection.push(helper);
+            this.scene.add(helper);
+        },
+
+        /**
+         *
+         * @param light
+         */
+        addDirectionalLightHelper: function(light){
+
+            var helper = new THREE.DirectionalLightHelper(light, 10);
+
+            this.helpersCollection.push(helper);
+            this.scene.add(helper);
+        },
+
+        /**
+         *
+         * @param light
+         */
+        addPointLightHelper: function(light){
+
+            var helper = new THREE.PointLightHelper(light, 10);
+
+            this.helpersCollection.push(helper);
+            this.scene.add(helper);
         }
-
     });
 });

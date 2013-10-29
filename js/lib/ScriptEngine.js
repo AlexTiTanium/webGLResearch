@@ -4,8 +4,6 @@
 define([
     'baseBehaviour',
     'lib/ScriptObject'
-
-
 ], /**
  * @param {BaseBehaviour} BaseBehaviour
  * @param {ScriptObject} ScriptObject
@@ -51,9 +49,8 @@ define([
 
             // See scenes folder json files
             var scene = this.engine.scene;
-            var scripts = scene.sceneModel.get("scripts"),
+            var scripts = scene.config,
                 scope = this;
-
 
             if(!scripts) { return; }
 
@@ -70,7 +67,7 @@ define([
             });
 
             // Find object by name and attach scripts
-            _.each(scripts.byName, function(scriptsArray, objectName){
+            _.each(scripts.objects, function(scriptsArray, objectName){
 
                 var object = scene.find(objectName);
 
@@ -97,10 +94,10 @@ define([
             var scope = this, scriptObject = null;
             var index = scope.collectionScriptObjects.indexOf(object);
 
-            require([scriptConfig.path], function (Script) {
+            require([scriptConfig.script], function (Script) {
 
                 if (!Script) {
-                    throw new Error("Script ot found by path: " + scriptConfig.path);
+                    throw new Error("Script not found by path: " + scriptConfig.script);
                 }
 
                 if (index > 0) {

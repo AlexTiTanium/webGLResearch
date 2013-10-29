@@ -46,6 +46,11 @@ define([
         scriptEngine: null,
 
         /**
+         * @property {THREE.Clock} clock
+         */
+        clock: null,
+
+        /**
          * Engine constructor
          *
          *
@@ -54,6 +59,7 @@ define([
         constructor: function () {
 
             this.scriptEngine = new ScriptEngine(this);
+            this.clock = new THREE.Clock();
         },
 
         /**
@@ -84,13 +90,21 @@ define([
          */
         beginRenderToContainer: function(container){
 
-            console.log('Start render');
             this.scene.defaultCamera.updateProjectionMatrix();
+            this.container = container;
+            this.clock.start();
 
-            this.renderer = new Renderer(container, this.scene);
+            // Create render
+            this.renderer = new Renderer(this.container, this.scene);
 
             // Schedule firs render step
             self.requestAnimationFrame(this.renderStep.bind(this));
+
+            // Notify script engine about render start
+            this.trigger('render:start');
+
+            // Save last time
+            this.lastTime = this.clock.getElapsedTime();
         },
 
         /**
@@ -103,8 +117,8 @@ define([
             // Render current scene
             this.renderer.rendererThree.render(this.scene.sceneThree,  this.scene.defaultCamera);
 
-            // Notify about each tick, send delta time
-            this.trigger("update", time - this.lastTime);
+            // Notify about each tick, send delta time in seconds
+            this.trigger("update", (time - this.lastTime) / 1000);
 
             // Schedule next render step
             self.requestAnimationFrame(this.renderStep.bind(this));

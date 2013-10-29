@@ -34737,7 +34737,7 @@ THREE.VertexNormalsHelper = function ( object, size, hex, linewidth ) {
 
 	var geometry = new THREE.Geometry();
 
-	var vertices = object.geometry.vertices;
+	var d = object.geometry.vertices;
 
 	var faces = object.geometry.faces;
 
@@ -34756,7 +34756,7 @@ THREE.VertexNormalsHelper = function ( object, size, hex, linewidth ) {
 
 	THREE.Line.call( this, geometry, new THREE.LineBasicMaterial( { color: color, linewidth: width } ), THREE.LinePieces );
 
-	this.matrixAutoUpdate = false;
+	//this.matrixAutoUpdate = true;
 
 	this.normalMatrix = new THREE.Matrix3();
 

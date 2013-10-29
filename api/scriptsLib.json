@@ -1,19 +1,14 @@
 {
+    "CameraFirstPersonController":  "lib/scripts/camera/CameraFirstPersonController",
 
-    "cameraControllers":{
-        "cameraFirstPersonController": { "path": "lib/scripts/camera/CameraFirstPersonController",  "position": [-1, 2.5, 10] }
-    },
+    "DebugHelper":                  "lib/scripts/debug/Helpers",
+    "DebugStatistics":              "lib/scripts/debug/Statistics",
+    "DrawCube":                     "lib/scripts/geometry/Cube",
 
-    "debug":{
-        "helpers": { "path": "lib/scripts/Debug", "names":[], "drawWire": true, "drawVertexNormals": true, "drawFacesNormals": true, "boxHelper": true }
-    },
+    "DirectionalLight":             "lib/scripts/lights/DirectionalLight",
+    "PointLight":                   "lib/scripts/lights/PointLight",
 
-    "geometry":{
-        "cube":{ "path": "lib/scripts/geometry/Cube",  "position": [-2, 3, 0], "size": 1 }
-    },
+    "CustomMaterial":               "lib/scripts/materials/CustomMaterial",
 
-    "lights": {
-        "directionalLight": { "path": "lib/scripts/lights/DirectionalLight",  "position": [0, 12, 0] , "intensity": 2.5 },
-        "PointLight": { "path": "lib/scripts/lights/PointLight",  "position": [5, 11, 0] , "intensity": 3 , "distance": 10 }
-    }
+    "Skybox":                       "lib/scripts/materials/CustomMaterial"
 }

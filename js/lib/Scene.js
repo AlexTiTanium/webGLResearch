@@ -5,8 +5,9 @@ define([
     'baseBehaviour',
     'underscore',
     'lib/loaders/SceneJsLoader',
-    'lib/Viewport'
-], function (BaseBehaviour,  _, SceneLoader, Viewport){
+    'lib/Viewport',
+    'q'
+], function (BaseBehaviour,  _, SceneLoader, Viewport, Q){
 
     /**
      * Scene class
@@ -19,6 +20,11 @@ define([
          * @property {SceneModel} sceneModel
          */
         sceneModel: null,
+
+        /**
+         * @property {object} config
+         */
+        config: null,
 
         /**
          * @property {Viewport} viewport
@@ -84,29 +90,72 @@ define([
         sceneParse: function(result){
 
             var scope = this, scene = result.scene;
-
-            this.defaultCamera = new THREE.PerspectiveCamera(45, this.viewport.getAspect(), 0.1, 1000);
-            scene.add(this.defaultCamera);
-
             this.sceneThree = scene;
 
-            // Attache scripts
-            this.scriptEngine.attachScripts();
+            Q().then(function(){
 
-            /////// Temp
+                // This was brake normals position, this fast fix for this
+                scene.rotation.fromArray( [0,0,0] );
+                scene.updateMatrix();
+                scene.updateMatrixWorld();
+                // -------------------------------------
 
-            var r = "scenes/first/skybox/dawnmountain-";
-            var urls = [ r + "xpos.png", r + "xneg.png",
-                r + "ypos.png", r + "yneg.png",
-                r + "zpos.png", r + "zneg.png" ];
+                // Add camera
+                this.defaultCamera = new THREE.PerspectiveCamera(45, scope.viewport.getAspect(), 0.1, 1000);
+                scene.add(this.defaultCamera);
 
-            var textureCube = THREE.ImageUtils.loadTextureCube( urls );
-            textureCube.format = THREE.RGBFormat;
+            })
+                .then(function(){
 
-            this.skyBoxTexture = textureCube;
-            /////
+                    var deferred = Q.defer();
 
-            scope.trigger('scene:ready');
+                    scope.sceneModel.getConfig(function(config){
+
+                        scope.config = config;
+                        deferred.resolve();
+                    });
+
+                    return deferred.promise;
+                })
+                .then(function(){
+
+                    var deferred = Q.defer();
+
+                    /////// Temp
+                    var r = "scenes/first/skybox/dawnmountain-";
+                    var urls = [ r + "xpos.png", r + "xneg.png",
+                        r + "ypos.png", r + "yneg.png",
+                        r + "zpos.png", r + "zneg.png" ];
+
+                    THREE.ImageUtils.loadTextureCube(urls, false, function(texture){
+
+                        texture.format = THREE.RGBFormat;
+                        scope.skyBoxTexture = texture;
+
+                        deferred.resolve();
+                    }, function(error){
+
+                        deferred.reject(new Error("Enable load skybox texture, error: " +   error.message));
+
+                    });
+                    /////
+
+                })
+                .then(function(){
+
+                    // Attache scripts
+                    scope.scriptEngine.attachScripts();
+                })
+                .fail(function(error){
+
+                    console.error('Error on parse scene: ' + error.message);
+
+                    throw error;
+                })
+                .done(function(){
+                    console.log("Faill");
+                    scope.trigger('scene:ready');
+                });
         },
 
         /**

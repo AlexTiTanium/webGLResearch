@@ -43,14 +43,14 @@ define([
          *
          * @property {float} velocityFriction
          */
-        velocityFriction: 0.08,
+        velocityFriction: 0.9,
 
         /**
-         * Acceleration, change for add more speed
+         * Speed, units in second
          *
-         * @property {float} acceleration
+         * @property {number} speed
          */
-        acceleration: 0.02,
+        speed: 15,
 
         /**
          * Precalculated half PI
@@ -137,22 +137,20 @@ define([
         /**
          * Call every render tick
          *
-         * @property {number} delta - for normal 60 fps ~10-20
+         * @property {float} delta in seconds
          */
         update: function(delta){
 
-            //console.log(this.velocity);
-
             // Velocity calculation
-            this.velocity.x += ( - this.velocity.x ) * this.velocityFriction * delta;
-            this.velocity.z += ( - this.velocity.z ) * this.velocityFriction * delta;
+            this.velocity.x *= this.velocityFriction * delta;
+            this.velocity.z *= this.velocityFriction * delta;
 
             // Direction move
-            if ( this.moveLeft )        this.velocity.x -= this.acceleration * delta;
-            if ( this.moveRight )       this.velocity.x += this.acceleration * delta;
+            if ( this.moveLeft )        this.velocity.x -= this.speed * delta;
+            if ( this.moveRight )       this.velocity.x += this.speed * delta;
 
-            if ( this.moveForward )     this.velocity.z -= this.acceleration * delta;
-            if ( this.moveBackward )    this.velocity.z += this.acceleration * delta;
+            if ( this.moveForward )     this.velocity.z -= this.speed * delta;
+            if ( this.moveBackward )    this.velocity.z += this.speed * delta;
 
             // Object update position
             this.cameraWrapper.translateX(this.velocity.x);

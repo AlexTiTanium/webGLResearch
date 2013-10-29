@@ -24,6 +24,7 @@ require.config({
         backbone:   '../vendor/backbone/backbone',
         toolbox:    '../vendor/jstoolsbox/toolbox',
         three:      '../vendor/threejs/build/three',
+        q:          '../vendor/q/q.min',
 
         // Controls
         mouse:      '../vendor/mouse/mouse',
@@ -38,7 +39,10 @@ require.config({
         // Application
         app:            'WebGLResearch',
         router:         'router/MainRouter',
-        baseBehaviour:  'lib/BaseBehaviour'
+        baseBehaviour:  'lib/BaseBehaviour',
+
+        // Utils
+        stats:          '../vendor/threejs/build/stats.min'
     },
 
     /**
@@ -50,6 +54,11 @@ require.config({
             exports: 'THREE'
         },
 
+        stats: {
+            exports: 'Stats',
+            deps: ['three']
+        },
+
         toolbox: {
             exports: 'Toolbox',
             deps: ['underscore']
@@ -59,16 +68,16 @@ require.config({
             exports: 'mouse'
         },
 
-        keyboard: {
-            exports: 'Mousetrap'
-        },
-
         semantic: {
             deps: ['jquery']
         },
 
         jquery: {
             exports: '$'
+        },
+
+        q: {
+            exports: 'Q'
         },
 
         backbone: {
