@@ -19,6 +19,15 @@
             </div>
          </div>
 
+        <%  if(error) { %>
+            <div id="loading-error" class="ui error message">
+                <div class="header">
+                    Error on scene loading:
+                </div>
+                <%= error %>
+            </div>
+        <% } %>
+
     </div>
 
 </div>

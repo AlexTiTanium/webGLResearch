@@ -52,7 +52,12 @@ define([
         /**
          * @property {Engine} engine
          */
-        scene: null,
+        engine: null,
+
+        /**
+         * Here we store error message, for show it on error
+         */
+        lastError: null,
 
         /**
          * Init view fetch collection from server
@@ -81,16 +86,26 @@ define([
             this.model = this.collection.get(this.sceneId);
 
             // Crete scene from scene model
-            this.scene = new Engine();
+            this.engine = new Engine();
 
             // Listen scene event
-            this.scene.on("loading:progress", this.updateProgress);
-            this.scene.on("scene:ready",      this.sceneReady);
+            this.engine.on("loading:progress",  this.updateProgress);
+            this.engine.on("loading:error",     this.showError.bind(this));
+            this.engine.on("scene:ready",       this.sceneReady);
 
             // Init loading
-            this.scene.load(this.model);
+            this.engine.load(this.model);
 
             // Update view
+            this.render();
+        },
+
+        /**
+         * Show error on loading
+         */
+        showError: function(errorMessage){
+
+            this.lastError = errorMessage;
             this.render();
         },
 
@@ -119,7 +134,7 @@ define([
         show3dScene: function () {
 
             // Load view with WebGL render
-            new View3dScene({ el: $('#content'), scene: this.scene });
+            new View3dScene({ el: $('#content'), engine: this.engine });
         },
 
         /**
@@ -128,7 +143,7 @@ define([
         render: function () {
 
             // Show loading progress
-            this.$el.html(this.template({ scene: this.model.toJSON() }));
+            this.$el.html(this.template({ scene: this.model.toJSON(), error: this.lastError }));
         }
 
     });

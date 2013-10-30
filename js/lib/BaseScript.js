@@ -74,6 +74,8 @@ define([
         },
 
         /**
+         * ORDER: #1 runs first as script attached to object
+         *
          * Call on script attach
          * Override this function in script
          */
@@ -82,6 +84,24 @@ define([
         },
 
         /**
+         * ORDER: #2 runs after awake, may lock scene loading
+         *
+         * You may override this method for loading resources or doing async tasks.
+         * Scene loading will stopped until deferred resolve
+         *
+         * @param {Q} deferred
+         * @return {Q}
+         */
+        ready: function(deferred){
+
+            deferred.resolve();
+
+            return deferred;
+        },
+
+        /**
+         * ORDER: #3 runs after render has start
+         *
          * Call after render
          */
         start: function(){

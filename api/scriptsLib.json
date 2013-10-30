@@ -1,14 +1,15 @@
 {
     "CameraFirstPersonController":  "lib/scripts/camera/CameraFirstPersonController",
 
-    "DebugHelper":                  "lib/scripts/debug/Helpers",
+    "DebugHelpers":                  "lib/scripts/debug/Helpers",
     "DebugStatistics":              "lib/scripts/debug/Statistics",
     "DrawCube":                     "lib/scripts/geometry/Cube",
 
     "DirectionalLight":             "lib/scripts/lights/DirectionalLight",
     "PointLight":                   "lib/scripts/lights/PointLight",
+    "AmbientLight":                 "lib/scripts/lights/AmbientLight",
 
     "CustomMaterial":               "lib/scripts/materials/CustomMaterial",
 
-    "Skybox":                       "lib/scripts/materials/CustomMaterial"
+    "Skybox":                       "lib/scripts/scene/Skybox"
 }

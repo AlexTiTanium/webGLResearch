@@ -23,7 +23,7 @@ define([
         /**
          * @property {Engine} engine
          */
-        scene: null,
+        engine: null,
 
         /**
          * Init view fetch collection from server
@@ -33,7 +33,7 @@ define([
             var scope = this;
 
             // Get params from router
-            scope.scene = attrs.scene;
+            scope.engine = attrs.engine;
 
             scope.render();
         },
@@ -43,7 +43,7 @@ define([
          */
         render: function () {
 
-            this.scene.beginRenderToContainer(this.$el);
+            this.engine.beginRenderToContainer(this.$el);
         }
 
     });

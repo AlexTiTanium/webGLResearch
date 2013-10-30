@@ -60,10 +60,15 @@ define([
          *
          * @param {BaseScript} ScriptClass
          * @param {object} scriptConfig
+         *
+         * @return {BaseScript}
          */
         attachScript: function(ScriptClass, scriptConfig){
 
-            this.scripts.pop(new ScriptClass(this.object, scriptConfig, this));
+            var script = new ScriptClass(this.object, scriptConfig, this);
+            this.scripts.pop(script);
+
+            return script
         }
 
     });

@@ -53,6 +53,11 @@ define([
          */
         defaultCamera: null,
 
+        /**
+         * Here store skybox texture for possible cubMap
+         *
+         * @property {THREE.Texture} defaultCamera
+         */
         skyBoxTexture: null,
 
         /**
@@ -101,8 +106,8 @@ define([
                 // -------------------------------------
 
                 // Add camera
-                this.defaultCamera = new THREE.PerspectiveCamera(45, scope.viewport.getAspect(), 0.1, 1000);
-                scene.add(this.defaultCamera);
+                scope.defaultCamera = new THREE.PerspectiveCamera(45, scope.viewport.getAspect(), 0.1, 1000);
+                scene.add(scope.defaultCamera);
 
             })
                 .then(function(){
@@ -140,20 +145,31 @@ define([
                     });
                     /////
 
+                    return deferred.promise;
                 })
                 .then(function(){
 
-                    // Attache scripts
-                    scope.scriptEngine.attachScripts();
+                    // Load script lib, loadScriptsLib return promise
+                    return scope.scriptEngine.loadScriptsLib();
+                })
+                .then(function(){
+
+                    // Attache scripts, return promise
+                    return scope.scriptEngine.attachScripts();
                 })
                 .fail(function(error){
 
                     console.error('Error on parse scene: ' + error.message);
 
+                    // Create error message in scope
+                    scope.trigger('loading:error',  error.message);
+
+                    // Re throw error
                     throw error;
                 })
                 .done(function(){
-                    console.log("Faill");
+
+                    // Create success message in scope
                     scope.trigger('scene:ready');
                 });
         },

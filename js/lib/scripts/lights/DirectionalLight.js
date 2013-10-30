@@ -21,9 +21,15 @@ define([
             var color = this.config.color || 0xffffff;
             var intensity = this.config.intensity || 0.5;
             var position = this.config.position || [0, 1, 0];
+            var target = this.config.target || false;
 
             var directionalLight = new THREE.DirectionalLight(color, intensity);
             directionalLight.position.set( position[0], position[1], position[2]);
+
+            if(target){
+
+                directionalLight.target = this.scene.find(target);
+            }
 
             this.scene.add(directionalLight);
         }

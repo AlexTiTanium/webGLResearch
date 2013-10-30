@@ -71,17 +71,25 @@ define([
 
             var scope = this;
 
+            // Crete scene
             scope.scene = new Scene(this.scriptEngine);
 
-            // Listen events
+            // Listen events progress from loader
             scope.scene.on('loading:progress', function(loaded){
                 scope.trigger('loading:progress', loaded);
             });
 
+            // Listen ready state from scene
             scope.scene.on('scene:ready', function(){
                 scope.trigger('scene:ready');
             });
 
+            // Listen scene loading error
+            scope.scene.on('loading:error', function(errorMessage){
+                scope.trigger('loading:error', errorMessage);
+            });
+
+            // Init scene loading from model
             scope.scene.load(sceneModel);
         },
 
@@ -90,6 +98,7 @@ define([
          */
         beginRenderToContainer: function(container){
 
+            // Prepare render
             this.scene.defaultCamera.updateProjectionMatrix();
             this.container = container;
             this.clock.start();
@@ -100,7 +109,7 @@ define([
             // Schedule firs render step
             self.requestAnimationFrame(this.renderStep.bind(this));
 
-            // Notify script engine about render start
+            // Notify script engine and other about render start
             this.trigger('render:start');
 
             // Save last time
