@@ -35,11 +35,11 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
             this.scene = scene;
 
             // Create WebGLRenderer
-            //this.rendererThree = new THREE.WebGLRenderer({ antialias: true });
             this.rendererThree = new THREE.WebGLRenderer({ antialias: true });
-            //this.rendererThree = new THREE.CanvasRenderer();
 
-            // start the renderer
+            //this.rendererThree = new THREE.CanvasRenderer(); // Use this for debug
+
+            // set viewport size
             this.rendererThree.setSize(this.scene.viewport.width, this.scene.viewport.height);
 
             // Options
@@ -47,9 +47,29 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
             this.rendererThree.gammaOutput = true;
             this.rendererThree.physicallyBasedShading = true;
 
+            //this.rendererThree.shadowMapEnabled = true;
+            //this.rendererThree.shadowMapType = THREE.PCFSoftShadowMap;
+
             // attach the render-supplied DOM element
             container.html(this.rendererThree.domElement);
-        }
 
+            // Listen window resize event
+            scene.engine.events.on("window:resize", this.windowResize.bind(this));
+        },
+
+        /**
+         * Window resize event
+         */
+        windowResize: function(){
+
+            var viewport = this.scene.viewport;
+
+            viewport.updateWindowSize();
+
+            this.scene.defaultCamera.aspect = viewport.getAspect();
+
+            this.scene.defaultCamera.updateProjectionMatrix();
+            this.rendererThree.setSize(viewport.width, viewport.height)
+        }
     });
 });

@@ -7,20 +7,19 @@
 
     "scene": [
 
-        { "script": "Skybox" },
+        { "script": "Skybox", "path": "scenes/first/skybox/" },
 
         { "script": "DebugStatistics", "on": true },
         { "script": "DebugHelpers", "names": [] },
-
-        { "script": "DirectionalLight", "position": [0, 50, 0], "intensity": 1.5 },
-        { "script": "DirectionalLight", "position": [0, 50, 0], "intensity": 0.9, "target": "Building10" }
+        { "script": "ColladaFixMaterials"}
     ],
 
     "objects": {
+
         "obj1": [
             {
                 "script": "CustomMaterial",
-                "name": "Body.001",
+                "name": "Body_001",
                 "shader": "lambert",
                 "color": "#1F53A4",
                 "ambient": "#FFFFFF",
@@ -30,7 +29,7 @@
             },
             {
                 "script": "CustomMaterial",
-                "name": "mirror.001",
+                "name": "mirror_001",
                 "shader": "lambert",
                 "color": "#ffffff",
                 "useEnvMap": true,
@@ -38,21 +37,21 @@
             },
             {
                 "script": "CustomMaterial",
-                "name": "black.001",
+                "name": "black_001",
                 "shader": "lambert",
                 "color": "#ffffff",
                 "useEnvMap": true
             },
             {
                 "script": "CustomMaterial",
-                "name": "mizo.001",
+                "name": "mizo_001",
                 "shader": "phong",
                 "color": "#444444",
                 "useEnvMap": true
             },
             {
                 "script": "CustomMaterial",
-                "name": "glass.001",
+                "name": "glass_001",
                 "shader": "phong",
                 "color": "#223344",
                 "opacity": 0.95,
@@ -62,26 +61,26 @@
             },
             {
                 "script": "CustomMaterial",
-                "name": "Interieur.001",
+                "name": "Interieur_001",
                 "shader": "phong",
                 "color": "#050505",
                 "shininess": 20
             },
             {
                 "script": "CustomMaterial",
-                "name": "tire.001",
+                "name": "tire_001",
                 "shader": "lambert",
                 "color": "#050505"
             },
             {
                 "script": "CustomMaterial",
-                "name": "tireling.001",
+                "name": "tireling_001",
                 "shader": "lambert",
                 "color": "#000000"
             },
             {
                 "script": "CustomMaterial",
-                "name": "black2.001",
+                "name": "black2_001",
                 "shader": "lambert",
                 "color": "#000000"
             }

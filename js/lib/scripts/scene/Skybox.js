@@ -17,26 +17,75 @@ define([
     return BaseScript.extend({
 
         /**
+         * Some settings
+         */
+        directions: ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"],
+        imageSuffix: ".png",
+
+        /**
+         * Path to
+         */
+        path: null,
+
+        /**
          * Call when script attached to object
          */
         awake: function () {
 
-            var imagePrefix = "scenes/first/skybox/dawnmountain-";
-            var directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
-            var imageSuffix = ".png";
-            var skyGeometry = new THREE.CubeGeometry( 1000, 1000, 1000 );
+            this.path = this.config.path || '/';
 
-            var materialArray = [];
-            for (var i = 0; i < 6; i++)
-                materialArray.push( new THREE.MeshBasicMaterial({
-                    map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
-                    side: THREE.BackSide
-                }));
+        },
 
-            var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
-            var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+        /**
+         * Load texture
+         *
+         * @param deferred
+         */
+        ready: function(deferred){
 
-            this.scene.add(skyBox);
+            var scope = this;
+
+            var urls =_.map(scope.directions, function(file){
+                return scope.path + file + scope.imageSuffix
+            });
+
+            THREE.ImageUtils.loadTextureCube(urls, false, function(texture){
+
+                texture.format = THREE.RGBFormat;
+                scope.scene.skyBoxTexture = texture;
+                scope.createSkybox(texture);
+
+                deferred.resolve();
+
+            }, function(error){
+
+                deferred.reject(new Error("Enable load skybox texture, error: " +   error.message));
+
+            });
+
+            return deferred;
+        },
+
+        /**
+         *  Create mesh and shader for skybox and add it to the scene
+         *
+         * @param {THREE.Texture} texture
+         */
+        createSkybox: function(texture){
+
+            var shader = THREE.ShaderLib["cube"];
+            shader.uniforms["tCube"].value = texture;
+
+            var material = new THREE.ShaderMaterial({
+                fragmentShader: shader.fragmentShader,
+                vertexShader: shader.vertexShader,
+                uniforms: shader.uniforms,
+                depthWrite: false,
+                side: THREE.BackSide
+            }),
+
+            mesh = new THREE.Mesh(new THREE.CubeGeometry(1000, 1000, 1000), material);
+            this.scene.add(mesh);
         }
 
     });

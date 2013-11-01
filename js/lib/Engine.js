@@ -6,8 +6,9 @@ define([
     'underscore',
     'lib/Renderer',
     'lib/Scene',
-    'lib/ScriptEngine'
-], function (BaseBehaviour, _, Renderer, Scene, ScriptEngine) {
+    'lib/ScriptEngine',
+    'lib/EventsCenter'
+], function (BaseBehaviour, _, Renderer, Scene, ScriptEngine, EventsCenter) {
 
     /**
      * Engine class
@@ -30,6 +31,11 @@ define([
          * @property {Renderer} renderer
          */
         renderer: null,
+
+        /**
+         * Events service, use this for exchanging events, subscribe, trigger etc...
+         */
+        events: null,
 
         /**
          * Time from last step
@@ -58,6 +64,7 @@ define([
          */
         constructor: function () {
 
+            this.events = new EventsCenter();
             this.scriptEngine = new ScriptEngine(this);
             this.clock = new THREE.Clock();
         },
@@ -72,22 +79,7 @@ define([
             var scope = this;
 
             // Crete scene
-            scope.scene = new Scene(this.scriptEngine);
-
-            // Listen events progress from loader
-            scope.scene.on('loading:progress', function(loaded){
-                scope.trigger('loading:progress', loaded);
-            });
-
-            // Listen ready state from scene
-            scope.scene.on('scene:ready', function(){
-                scope.trigger('scene:ready');
-            });
-
-            // Listen scene loading error
-            scope.scene.on('loading:error', function(errorMessage){
-                scope.trigger('loading:error', errorMessage);
-            });
+            scope.scene = new Scene(this);
 
             // Init scene loading from model
             scope.scene.load(sceneModel);
@@ -110,7 +102,7 @@ define([
             self.requestAnimationFrame(this.renderStep.bind(this));
 
             // Notify script engine and other about render start
-            this.trigger('render:start');
+            this.events.trigger('render:start');
 
             // Save last time
             this.lastTime = this.clock.getElapsedTime();
@@ -127,7 +119,7 @@ define([
             this.renderer.rendererThree.render(this.scene.sceneThree,  this.scene.defaultCamera);
 
             // Notify about each tick, send delta time in seconds
-            this.trigger("update", (time - this.lastTime) / 1000);
+            this.events.trigger("update", (time - this.lastTime) / 1000);
 
             // Schedule next render step
             self.requestAnimationFrame(this.renderStep.bind(this));

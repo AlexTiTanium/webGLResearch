@@ -49,6 +49,13 @@ define([
         scriptEngine: null,
 
         /**
+         * Engine
+         *
+         * @property {Engine} Engine
+         */
+        engine: null,
+
+        /**
          * @property {THREE.Camera} defaultCamera
          */
         defaultCamera: null,
@@ -63,9 +70,9 @@ define([
         /**
          *  Create scene instance, from scene model
          *
-         * @param {ScriptEngine} scriptEngineInstance
+         * @param {Engine} engine
          */
-        constructor : function(scriptEngineInstance) {
+        constructor : function(engine) {
 
             var scope = this;
 
@@ -73,28 +80,32 @@ define([
             scope.sceneLoader = new SceneLoader();
 
             // Script engine
-            scope.scriptEngine = scriptEngineInstance;
+            scope.scriptEngine = engine.scriptEngine;
+            scope.engine = engine;
 
             scope.viewport = new Viewport();
 
             // Listen events
             scope.sceneLoader.on('progress', function(loaded){
-                scope.trigger('loading:progress', loaded);
+
+                scope.engine.events.trigger('loading:progress', loaded / 2); // Because we ned also parse scene, and report this progress
+                                                                             // Loaded model is only 50%, 50% parsing scene
             });
 
-            scope.sceneLoader.on('loaded', function(object){
+            scope.sceneLoader.on('loaded', function(scene){
 
-                scope.sceneParse(object);
+                scope.sceneParse(scene);
             });
         },
 
         /**
+         * Prepare scene, load script, do some fixes
          *
-         * @param result
+         * @param scene
          */
-        sceneParse: function(result){
+        sceneParse: function(scene){
 
-            var scope = this, scene = result.scene;
+            var scope = this;
             this.sceneThree = scene;
 
             Q().then(function(){
@@ -114,36 +125,12 @@ define([
 
                     var deferred = Q.defer();
 
+                    // Get scene config
                     scope.sceneModel.getConfig(function(config){
 
                         scope.config = config;
                         deferred.resolve();
                     });
-
-                    return deferred.promise;
-                })
-                .then(function(){
-
-                    var deferred = Q.defer();
-
-                    /////// Temp
-                    var r = "scenes/first/skybox/dawnmountain-";
-                    var urls = [ r + "xpos.png", r + "xneg.png",
-                        r + "ypos.png", r + "yneg.png",
-                        r + "zpos.png", r + "zneg.png" ];
-
-                    THREE.ImageUtils.loadTextureCube(urls, false, function(texture){
-
-                        texture.format = THREE.RGBFormat;
-                        scope.skyBoxTexture = texture;
-
-                        deferred.resolve();
-                    }, function(error){
-
-                        deferred.reject(new Error("Enable load skybox texture, error: " +   error.message));
-
-                    });
-                    /////
 
                     return deferred.promise;
                 })
@@ -162,7 +149,7 @@ define([
                     console.error('Error on parse scene: ' + error.message);
 
                     // Create error message in scope
-                    scope.trigger('loading:error',  error.message);
+                    scope.engine.events.trigger('loading:error',  error.message);
 
                     // Re throw error
                     throw error;
@@ -170,7 +157,8 @@ define([
                 .done(function(){
 
                     // Create success message in scope
-                    scope.trigger('scene:ready');
+                    scope.engine.events.trigger('loading:progress', 100);
+                    scope.engine.events.trigger('scene:ready');
                 });
         },
 

@@ -66,17 +66,22 @@ define([
                 default: console.warn("Shader " + shader + " not found"); break;
             }
 
-            var materials = this.object.material.materials;
+            if(this.object.material instanceof THREE.MeshFaceMaterial){
 
-            var matIndex = _.findIndex(materials, { 'name': name });
+                var materials = this.object.material.materials;
 
-            if(matIndex != -1){
-                materials[matIndex] = material;
+                var matIndex = _.findIndex(materials, { 'name': name });
+
+                if(matIndex != -1){
+                    materials[matIndex] = material;
+                }else{
+                    console.warn("Material " + name + " not found on " + this.object.name);
+                }
+
             }else{
-                console.warn("Material " + name + " not found on " + this.object.name);
+                this.object.material = material;
             }
         }
-
     });
 });
 

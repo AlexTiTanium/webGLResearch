@@ -75,15 +75,13 @@ define([
             this.cameraWrapper.add(this.camera);
 
             // Setup camera
-            this.cameraWrapper.position.x = position[0];
-            this.cameraWrapper.position.y = position[1];
-            this.cameraWrapper.position.z = position[2];
+            this.cameraWrapper.position.fromArray(position);
 
             // Add wrapped camera to the scene
             this.scene.add(this.cameraWrapper);
 
             // Subscribe for render loop
-            this.engine.on("update", this.update.bind(this));
+            this.events.on("update", this.update.bind(this));
 
             // Event binding
             this.enableKeyboardEvents();

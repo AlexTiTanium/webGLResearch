@@ -96,34 +96,34 @@
 
 "materials" :
 {
-	"black.001" : {
-		"type": "MeshLambertMaterial",
-		"parameters": { "color": 1710618, "opacity": 1, "blending": "NormalBlending" }
-	},
-
-	"black2.001" : {
+	"black2_001" : {
 		"type": "MeshLambertMaterial",
 		"parameters": { "color": 0, "opacity": 1, "blending": "NormalBlending" }
 	},
 
-	"Body.001" : {
-		"type": "MeshLambertMaterial",
-		"parameters": { "color": 3762294, "opacity": 1, "blending": "NormalBlending" }
-	},
-
-	"glass.001" : {
-		"type": "MeshLambertMaterial",
-		"parameters": { "color": 3362638, "opacity": 0.34, "transparent": true, "blending": "NormalBlending" }
-	},
-
-	"Interieur.001" : {
+	"black_001" : {
 		"type": "MeshLambertMaterial",
 		"parameters": { "color": 1710618, "opacity": 1, "blending": "NormalBlending" }
 	},
 
+	"Body_001" : {
+		"type": "MeshLambertMaterial",
+		"parameters": { "color": 3762294, "opacity": 1, "blending": "NormalBlending" }
+	},
+
+	"glass_001" : {
+		"type": "MeshLambertMaterial",
+		"parameters": { "color": 3362638, "opacity": 0.34, "transparent": true, "blending": "NormalBlending" }
+	},
+
 	"Build10" : {
 		"type": "MeshLambertMaterial",
-		"parameters": { "color": 13421772, "opacity": 1, "map": "Build10.jpg", "blending": "NormalBlending" }
+		"parameters": { "color": 10790052, "opacity": 1, "map": "Build10.jpg", "blending": "NormalBlending" }
+	},
+
+	"Interieur_001" : {
+		"type": "MeshLambertMaterial",
+		"parameters": { "color": 1710618, "opacity": 1, "blending": "NormalBlending" }
 	},
 
 	"Material.001" : {
@@ -131,22 +131,22 @@
 		"parameters": { "color": 10724259, "opacity": 1, "map": "MountainGrass.jpg", "blending": "NormalBlending" }
 	},
 
-	"mirror.001" : {
+	"mirror_001" : {
 		"type": "MeshLambertMaterial",
 		"parameters": { "color": 5000268, "opacity": 1, "blending": "NormalBlending" }
 	},
 
-	"mizo.001" : {
+	"mizo_001" : {
 		"type": "MeshLambertMaterial",
 		"parameters": { "color": 0, "opacity": 1, "blending": "NormalBlending" }
 	},
 
-	"tire.001" : {
+	"tire_001" : {
 		"type": "MeshLambertMaterial",
 		"parameters": { "color": 4539715, "opacity": 1, "blending": "NormalBlending" }
 	},
 
-	"tireling.001" : {
+	"tireling_001" : {
 		"type": "MeshLambertMaterial",
 		"parameters": { "color": 8355711, "opacity": 1, "blending": "NormalBlending" }
 	}

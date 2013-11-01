@@ -42,7 +42,10 @@ require.config({
         baseBehaviour:  'lib/BaseBehaviour',
 
         // Utils
-        stats:          '../vendor/threejs/build/stats.min'
+        stats:          '../vendor/threejs/build/stats.min',
+
+        // Loaders
+        colladaLoader:  'lib/loaders/ColladaLoader'
     },
 
     /**
@@ -52,6 +55,10 @@ require.config({
 
         three: {
             exports: 'THREE'
+        },
+
+        colladaLoader: {
+            exports: 'THREE.ColladaLoader'
         },
 
         stats: {

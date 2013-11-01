@@ -2,7 +2,7 @@
     {
         "id": "first-scene",
         "name": "First scene",
-        "scenePath": "scenes/first/resources/scene.js",
+        "scenePath": "scenes/first/collada/scene.dae",
         "description": "My first WebGL experiment",
         "config": "scenes/first/config.json"
     }

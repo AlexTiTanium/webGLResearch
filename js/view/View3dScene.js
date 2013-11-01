@@ -35,7 +35,25 @@ define([
             // Get params from router
             scope.engine = attrs.engine;
 
+            // Trigger on window resize event
+            scope.engine.events.on("render:start", function(){
+                scope.listenResizeEvent();
+            });
+
             scope.render();
+        },
+
+        /**
+         * Init some system events
+         */
+        listenResizeEvent: function(){
+
+            var scope = this;
+
+            window.addEventListener('resize', function(){
+
+                scope.engine.events.trigger("window:resize");
+            }, false );
         },
 
         /**

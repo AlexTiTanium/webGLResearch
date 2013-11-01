@@ -10,6 +10,7 @@
     "AmbientLight":                 "lib/scripts/lights/AmbientLight",
 
     "CustomMaterial":               "lib/scripts/materials/CustomMaterial",
+    "ColladaFixMaterials":          "lib/scripts/materials/ColladaFixMaterials",
 
     "Skybox":                       "lib/scripts/scene/Skybox"
 }

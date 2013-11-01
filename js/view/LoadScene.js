@@ -89,9 +89,9 @@ define([
             this.engine = new Engine();
 
             // Listen scene event
-            this.engine.on("loading:progress",  this.updateProgress);
-            this.engine.on("loading:error",     this.showError.bind(this));
-            this.engine.on("scene:ready",       this.sceneReady);
+            this.engine.events.on("loading:progress",  this.updateProgress);
+            this.engine.events.on("loading:error",     this.showError.bind(this));
+            this.engine.events.on("scene:ready",       this.sceneReady);
 
             // Init loading
             this.engine.load(this.model);

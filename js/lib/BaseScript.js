@@ -42,6 +42,13 @@ define([
         scene: null,
 
         /**
+         * Events center shortcut
+         *
+         * @property {EventsCenter} events
+         */
+        events: null,
+
+        /**
          * Here we save script configuration
          *
          * @property {object} config
@@ -67,10 +74,12 @@ define([
 
             this.engine = scriptObject.engine;
 
+            this.events = this.engine.events;
+
             // Init script
             this.awake();
 
-            this.engine.on("render:start", this.start.bind(this));
+            this.events.on("render:start", this.start.bind(this));
         },
 
         /**

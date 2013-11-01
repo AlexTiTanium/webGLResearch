@@ -25,10 +25,18 @@ define(['baseBehaviour', 'three'], function (BaseBehaviour, THREE) {
          *
          * @constructor
          */
-        constructor: function (width, height) {
+        constructor: function () {
 
-            this.width = width || this.getWindowWidth();
-            this.height = height || this.getWindowHeight();
+            this.updateWindowSize();
+        },
+
+        /**
+         * Recalculate window size
+         */
+        updateWindowSize: function(){
+
+            this.width =  this.getWindowWidth();
+            this.height = this.getWindowHeight();
         },
 
         /**

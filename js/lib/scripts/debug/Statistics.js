@@ -66,7 +66,7 @@ define([
             this.engine.container.append(this.stats.domElement);
 
             // Subscribe for render loop
-            this.listenTo(this.engine, "update", this.update);
+            this.listenTo(this.events, "update", this.update);
 
             this.isEnabled = true;
         },
@@ -79,7 +79,7 @@ define([
             // Append container
             $(this.stats.domElement).detach();
 
-            this.stopListening(this.engine, "update");
+            this.stopListening(this.event, "update");
 
             this.isEnabled = false;
         },
