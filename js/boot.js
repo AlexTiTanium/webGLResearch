@@ -72,7 +72,7 @@ require.config({
         },
 
         mouse: {
-            exports: 'mouse'
+            exports: 'Window.prototype.Mouse'
         },
 
         semantic: {

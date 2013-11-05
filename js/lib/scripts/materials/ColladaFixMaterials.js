@@ -23,9 +23,13 @@ define([
 
             scope.scene.traverse(function(object){
 
+                if(object instanceof THREE.AmbientLight){
+                    object.color = new THREE.Color(0x404040);
+                }
+
                 if (object instanceof THREE.Mesh) {
 
-                    if(object.material instanceof THREE.MeshPhongMaterial){
+                    if(object.material instanceof THREE.MeshPhongMaterial || object.material instanceof THREE.MeshLambertMaterial){
                         object.material.side = 0;
                     }
                 }

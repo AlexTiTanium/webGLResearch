@@ -5,5 +5,13 @@
         "scenePath": "scenes/first/collada/scene.dae",
         "description": "My first WebGL experiment",
         "config": "scenes/first/config.json"
+    },
+
+    {
+        "id": "shell-scene",
+        "name": "Shell first models",
+        "scenePath": "scenes/shell/collada/Shell_Forecourt_OpenCollada.dae",
+        "description": "My first WebGL experiment",
+        "config": "scenes/shell/config.json"
     }
 ]

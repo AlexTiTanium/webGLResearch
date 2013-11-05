@@ -19,7 +19,7 @@ define([
         /**
          * Some settings
          */
-        directions: ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"],
+        directions: ["posx", "negx", "posy", "negy", "posz", "negz"],
         imageSuffix: ".png",
 
         /**
@@ -28,12 +28,17 @@ define([
         path: null,
 
         /**
+         * Images type (jpeg , png)
+         */
+        type: null,
+
+        /**
          * Call when script attached to object
          */
         awake: function () {
 
             this.path = this.config.path || '/';
-
+            this.type = this.config.type || this.imageSuffix;
         },
 
         /**
@@ -46,7 +51,8 @@ define([
             var scope = this;
 
             var urls =_.map(scope.directions, function(file){
-                return scope.path + file + scope.imageSuffix
+
+                return scope.path + file + scope.type;
             });
 
             THREE.ImageUtils.loadTextureCube(urls, false, function(texture){

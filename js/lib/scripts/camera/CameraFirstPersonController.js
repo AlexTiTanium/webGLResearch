@@ -82,6 +82,12 @@ define([
 
             // Subscribe for render loop
             this.events.on("update", this.update.bind(this));
+        },
+
+        /**
+         *  Call before render
+         */
+        start: function(){
 
             // Event binding
             this.enableKeyboardEvents();
@@ -119,7 +125,9 @@ define([
 
             var scope = this;
 
-            Mouse.on('drag', function(event){
+            var mouse = new Mouse(this.engine.container.get(0)); // this.engine.container is jq for mouse need native DOM element
+
+            mouse.on('drag', function(event){
 
                 var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
                 var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;

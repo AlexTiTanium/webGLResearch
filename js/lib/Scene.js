@@ -116,6 +116,9 @@ define([
                 scene.updateMatrixWorld();
                 // -------------------------------------
 
+                // Fog
+                scene.fog = new THREE.FogExp2(0xFFFFFF,  0.009);
+
                 // Add camera
                 scope.defaultCamera = new THREE.PerspectiveCamera(45, scope.viewport.getAspect(), 0.1, 1000);
                 scene.add(scope.defaultCamera);

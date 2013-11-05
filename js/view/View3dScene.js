@@ -41,6 +41,8 @@ define([
             });
 
             scope.render();
+
+            this.engine.beginRenderToContainer($("#3d-view"));
         },
 
         /**
@@ -61,7 +63,7 @@ define([
          */
         render: function () {
 
-            this.engine.beginRenderToContainer(this.$el);
+            this.$el.html(this.template({scene: this.engine.scene.sceneModel.toJSON()}));
         }
 
     });

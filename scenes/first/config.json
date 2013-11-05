@@ -9,7 +9,7 @@
 
         { "script": "Skybox", "path": "scenes/first/skybox/" },
 
-        { "script": "DebugStatistics", "on": true },
+        { "script": "DebugStatistics", "on": false },
         { "script": "DebugHelpers", "names": [] },
         { "script": "ColladaFixMaterials"}
     ],
