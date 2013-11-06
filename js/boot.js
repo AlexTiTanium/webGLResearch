@@ -35,6 +35,7 @@ require.config({
 
         // UI lib
         semantic: '../vendor/semantic/packaged/javascript/semantic',
+        slider:   '../vendor/slider/js/ion.rangeSlider',
 
         // Application
         app:            'WebGLResearch',
@@ -64,6 +65,10 @@ require.config({
         stats: {
             exports: 'Stats',
             deps: ['three']
+        },
+
+        slider: {
+            deps: ['jquery']
         },
 
         toolbox: {
@@ -99,7 +104,7 @@ require.config({
 });
 
 // Start app
-require(['backbone','app', 'semantic', 'three'], function(Backbone, App) {
+require(['backbone','app', 'semantic', 'three', 'slider'], function(Backbone, App) {
 
     App.initialize();
 });

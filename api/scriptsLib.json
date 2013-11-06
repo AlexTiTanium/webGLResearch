@@ -1,5 +1,6 @@
 {
     "CameraFirstPersonController":  "lib/scripts/camera/CameraFirstPersonController",
+    "CameraPathController":         "lib/scripts/camera/CameraPathController",
 
     "DebugHelpers":                  "lib/scripts/debug/Helpers",
     "DebugStatistics":              "lib/scripts/debug/Statistics",

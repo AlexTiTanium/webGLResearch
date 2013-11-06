@@ -43,6 +43,8 @@ define([
             scope.render();
 
             this.engine.beginRenderToContainer($("#3d-view"));
+
+            $('#slider').ionRangeSlider();
         },
 
         /**

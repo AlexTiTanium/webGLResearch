@@ -2,7 +2,7 @@
 
     "camera": [
 
-        { "script": "CameraFirstPersonController", "position": [-20, 5.5, 30] }
+        { "script": "CameraPathController", "position": [-20, 5.5, 30] }
     ],
 
     "scene": [
