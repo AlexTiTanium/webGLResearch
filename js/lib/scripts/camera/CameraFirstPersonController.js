@@ -132,7 +132,7 @@ define([
                 var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
                 var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-                //console.log(movementX);
+                console.log(scope.cameraWrapper.position);
 
                 scope.cameraWrapper.rotation.y -= movementX * 0.002;
                 //scope.cameraWrapper.rotation.x -= movementY * 0.002;

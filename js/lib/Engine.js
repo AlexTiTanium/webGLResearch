@@ -38,13 +38,6 @@ define([
         events: null,
 
         /**
-         * Time from last step
-         *
-         * @property {Number} scriptEngine
-         */
-        lastTime: null,
-
-        /**
          * Script Engine
          *
          * @property {ScriptEngine} scriptEngine
@@ -93,39 +86,34 @@ define([
             // Prepare render
             this.scene.defaultCamera.updateProjectionMatrix();
             this.container = container;
-            this.clock.start();
 
             // Create render
             this.renderer = new Renderer(this.container, this.scene);
 
             // Schedule firs render step
-            self.requestAnimationFrame(this.renderStep.bind(this));
+            this.renderStep();
 
             // Notify script engine and other about render start
             this.events.trigger('render:start');
-
-            // Save last time
-            this.lastTime = this.clock.getElapsedTime();
         },
 
         /**
          * Main render loop step, ~60 calls per second
          *
-         * @param {number} time
          */
-        renderStep: function(time){
+        renderStep: function(){
+
+            // Schedule next render step
+            self.requestAnimationFrame(this.renderStep.bind(this));
+
+            // Update animation engine
+            THREE.AnimationHandler.update(this.clock.getDelta());
 
             // Render current scene
             this.renderer.rendererThree.render(this.scene.sceneThree,  this.scene.defaultCamera);
 
             // Notify about each tick, send delta time in seconds
-            this.events.trigger("update", (time - this.lastTime) / 1000);
-
-            // Schedule next render step
-            self.requestAnimationFrame(this.renderStep.bind(this));
-
-            // Save last time
-            this.lastTime = time;
+            this.events.trigger("update", this.clock.getDelta());
         }
     });
 });

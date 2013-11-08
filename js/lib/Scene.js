@@ -93,7 +93,6 @@ define([
             });
 
             scope.sceneLoader.on('loaded', function(scene){
-
                 scope.sceneParse(scene);
             });
         },
@@ -121,6 +120,7 @@ define([
 
                 // Add camera
                 scope.defaultCamera = new THREE.PerspectiveCamera(45, scope.viewport.getAspect(), 0.1, 1000);
+
                 scene.add(scope.defaultCamera);
 
             })

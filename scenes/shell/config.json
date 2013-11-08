@@ -7,6 +7,7 @@
 
     "scene": [
 
+        { "script": "AmbientLight", "color": "#404040"},
         { "script": "Skybox", "path": "scenes/shell/skybox/", "type": ".jpg" },
 
         { "script": "DebugStatistics", "on": false },
@@ -15,6 +16,8 @@
         { "script": "DirectionalLight", "position": [0, 100, 0], "intensity": 1.5 },
 
         { "script": "ColladaFixMaterials"}
+
+
     ],
 
     "objects": {
