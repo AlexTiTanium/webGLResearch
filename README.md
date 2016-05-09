@@ -1,4 +1,3 @@
 webGLResearch
 =============
 
-DataArt Research project
