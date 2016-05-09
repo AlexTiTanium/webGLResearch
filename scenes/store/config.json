@@ -1,0 +1,26 @@
+{
+
+    "camera": [
+
+        { "script": "CameraPathController", "position": [-20, 5.5, 30] }
+    ],
+
+    "scene": [
+
+        { "script": "AmbientLight", "color": "#404040"},
+        { "script": "Skybox", "path": "scenes/store/skybox/", "type": ".jpg" },
+
+        { "script": "DebugStatistics", "on": false },
+        { "script": "DebugHelpers", "names": [] },
+
+        { "script": "DirectionalLight", "position": [0, 100, 0], "intensity": 1.5 },
+
+        { "script": "ColladaFixMaterials"}
+
+
+    ],
+
+    "objects": {
+
+    }
+}

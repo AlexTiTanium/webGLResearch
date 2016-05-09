@@ -50,6 +50,11 @@ define([
         clock: null,
 
         /**
+         * Cache last delta
+         */
+        delta: null,
+
+        /**
          * Engine constructor
          *
          *
@@ -103,17 +108,21 @@ define([
          */
         renderStep: function(){
 
+            // Get delta time
+            this.delta = this.clock.getDelta();
+
             // Schedule next render step
             self.requestAnimationFrame(this.renderStep.bind(this));
 
             // Update animation engine
-            THREE.AnimationHandler.update(this.clock.getDelta());
+            THREE.AnimationHandler.update(this.delta);
 
             // Render current scene
+            //this.renderer.clear();// Clear scene before next render
             this.renderer.rendererThree.render(this.scene.sceneThree,  this.scene.defaultCamera);
 
             // Notify about each tick, send delta time in seconds
-            this.events.trigger("update", this.clock.getDelta());
+            this.events.trigger("update", this.delta);
         }
     });
 });

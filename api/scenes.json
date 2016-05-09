@@ -8,10 +8,10 @@
     },
 
     {
-        "id": "shell-scene",
-        "name": "Shell first models",
-        "scenePath": "scenes/shell/collada/Shell_Forecourt_OpenCollada.dae",
-        "description": "My first WebGL experiment",
-        "config": "scenes/shell/config.json"
+        "id": "gas-station-scene",
+        "name": "Gas station model",
+        "scenePath": "scenes/store/collada/Store_OpenCollada.dae",
+        "description": "Model export experiment",
+        "config": "scenes/store/config.json"
     }
 ]
